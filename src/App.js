@@ -1,20 +1,21 @@
 import React from 'react';
 import './App.css';
-import Provider from './contexts/MyProvider';
 import Header from './Components/Header';
 import Form from './Components/Form';
 import Table from './Components/Table';
+import PlanetContext from './contexts/PlanetContext';
+import useFetch from './hooks/useFetch';
 
 function App() {
+  const URL = 'https://swapi.dev/api/planets';
+  const { planetData, isLoading } = useFetch(URL);
+
   return (
-    <Provider>
-      <span>Hello, App!</span>
+    <PlanetContext.Provider value={ { planetData, isLoading } }>
       <Header />
-      <div>
-        <Form />
-        <Table />
-      </div>
-    </Provider>
+      <Form />
+      <Table />
+    </PlanetContext.Provider>
   );
 }
 

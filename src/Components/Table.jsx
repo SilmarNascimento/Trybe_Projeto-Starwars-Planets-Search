@@ -1,22 +1,36 @@
 import { useContext } from 'react';
-import PlanetContext from '../contexts/PlanteContext';
+import PlanetContext from '../contexts/PlanetContext';
 
 function Table() {
-  const { data, isLoading } = useContext(PlanetContext);
+  const { planetData, isLoading } = useContext(PlanetContext);
+  const features = Object.keys(planetData[0] ?? []);
 
   const renderTableheader = () => {
-    if (data) {
-      const headerTitles = Object.keys(data[0]);
-      console.log(headerTitles);
-      const headers = headerTitles.map((title, idx) => <th key={ idx }>{ title }</th>);
-      console.log(headers);
+    if (!isLoading) {
+      const headers = features.map((title, idx) => <th key={ idx }>{ title }</th>);
       return headers;
     }
   };
 
-  console.log(data, isLoading);
+  const renderTableBody = () => {
+    if (!isLoading) {
+      const planetDescription = planetData.map((planet, index) => (
+        <tr key={ index }>
+          { features.map((feature, position) => (
+            <th key={ `${planet}-${position}` }>
+              { planet[feature] }
+            </th>
+          )) }
+        </tr>
+      ));
+      return planetDescription;
+    }
+  };
+
+  console.log(planetData, isLoading);
   return (
     <div>
+      { isLoading && <p>Carregando...</p> }
       <h1>Table</h1>
       <table>
         <thead>
@@ -25,7 +39,7 @@ function Table() {
           </tr>
         </thead>
         <tbody>
-          <tr />
+          { !isLoading && renderTableBody() }
         </tbody>
       </table>
     </div>
