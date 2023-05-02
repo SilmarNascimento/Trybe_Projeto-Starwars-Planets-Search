@@ -8,13 +8,21 @@ import useFetch from './hooks/useFetch';
 
 function App() {
   const URL = 'https://swapi.dev/api/planets';
-  const { planetData, isLoading } = useFetch(URL);
+  const { planetData, isLoading, setPlanetData } = useFetch(URL);
+
+  const contextObj = {
+    planetData,
+    isLoading,
+    setPlanetData,
+  };
 
   return (
-    <PlanetContext.Provider value={ { planetData, isLoading } }>
+    <PlanetContext.Provider value={ contextObj }>
       <Header />
-      <Form />
-      <Table />
+      <div>
+        <Form />
+        <Table />
+      </div>
     </PlanetContext.Provider>
   );
 }
