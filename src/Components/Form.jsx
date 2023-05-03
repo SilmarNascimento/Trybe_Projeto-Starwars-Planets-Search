@@ -16,14 +16,26 @@ function Form() {
     'orbital_period',
     'diameter',
     'rotation_period',
-    'surface_water'];
+    'surface_water',
+  ];
+  const maxLimitFilter = 5;
 
   const [nameInput, setNameInput] = useState('');
-  const [featureInput, setFeatureinput] = useState('population');
+  const [featureInput, setFeatureInput] = useState('population');
   const [operationInput, setOperationInput] = useState('maior que');
   const [valueFilter, setValueFilter] = useState('0');
 
   const nameFilter = (array, value) => array.filter((item) => item.name.includes(value));
+
+  const refreshState = (array) => {
+    const avaliableFeatures = features
+      .filter((feature) => !array
+        .find((filter) => filter.feature === feature));
+    console.log(avaliableFeatures);
+    setFeatureInput(avaliableFeatures[0]);
+    setOperationInput('maior que');
+    setValueFilter('0');
+  };
 
   const handleFilter = (event) => {
     event.preventDefault();
@@ -40,13 +52,10 @@ function Form() {
         operation,
         value,
       } = filter;
-      console.log(planetData);
-      console.log(filteredPlanet);
-      filterFeature(feature, operation, value);
+      setFilteredPlanet(filterFeature(filteredPlanet, feature, operation, value));
+      refreshState(newFilterSet);
     });
   };
-  console.log(filters);
-  console.log(filteredPlanet);
 
   return (
     <form action="">
@@ -72,7 +81,7 @@ function Form() {
             name="featureInput"
             id="featureInput"
             value={ featureInput }
-            onChange={ ({ target: { value } }) => setFeatureinput(value) }
+            onChange={ ({ target: { value } }) => setFeatureInput(value) }
             data-testid="column-filter"
           >
             {
@@ -112,6 +121,7 @@ function Form() {
             data-testid="value-filter"
           />
           <button
+            disabled={ filters.length === maxLimitFilter }
             onClick={ (event) => handleFilter(event) }
             data-testid="button-filter"
           >

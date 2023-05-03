@@ -5,6 +5,7 @@ import Form from './Components/Form';
 import Table from './Components/Table';
 import PlanetContext from './contexts/PlanetContext';
 import useFetch from './hooks/useFetch';
+import Filter from './Components/Filter';
 
 function App() {
   const URL = 'https://swapi.dev/api/planets';
@@ -15,22 +16,14 @@ function App() {
   const MENOR = 'menor que';
   const IGUAL = 'igual a';
 
-  const filterFeature = (feature, operation, value) => {
+  const filterFeature = (array, feature, operation, value) => {
     switch (operation) {
     case MAIOR:
-      console.log('entrei maior');
-      setFilteredPlanet(filteredPlanet
-        .filter((item) => parseInt(item[feature], 10) > value));
-      break;
+      return array.filter((item) => parseInt(item[feature], 10) > value);
     case MENOR:
-      console.log('entrei menor');
-      setFilteredPlanet(filteredPlanet
-        .filter((item) => parseInt(item[feature], 10) < value));
-      break;
+      return array.filter((item) => parseInt(item[feature], 10) < value);
     case IGUAL:
-      setFilteredPlanet(filteredPlanet
-        .filter((item) => parseInt(item[feature], 10) === value));
-      break;
+      return array.filter((item) => parseInt(item[feature], 10) === value);
     default:
       break;
     }
@@ -51,6 +44,7 @@ function App() {
       <Header />
       <div>
         <Form />
+        <Filter />
         <Table />
       </div>
     </PlanetContext.Provider>
