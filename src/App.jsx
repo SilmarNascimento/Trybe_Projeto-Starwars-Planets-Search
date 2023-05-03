@@ -1,4 +1,5 @@
 import './App.css';
+import { useState } from 'react';
 import Header from './Components/Header';
 import Form from './Components/Form';
 import Table from './Components/Table';
@@ -8,34 +9,40 @@ import useFetch from './hooks/useFetch';
 function App() {
   const URL = 'https://swapi.dev/api/planets';
   const { planetData, filteredPlanet, isLoading, setFilteredPlanet } = useFetch(URL);
+  const [filters, setFilters] = useState([]);
 
   const MAIOR = 'maior que';
   const MENOR = 'menor que';
   const IGUAL = 'igual a';
 
-  const filterFeature = (operation, value) => {
+  const filterFeature = (feature, operation, value) => {
     switch (operation) {
     case MAIOR:
-      setFilteredPlanet(filteredPlanet.filter((item) => item > value));
+      console.log('entrei maior');
+      setFilteredPlanet(filteredPlanet
+        .filter((item) => parseInt(item[feature], 10) > value));
       break;
     case MENOR:
-      setFilteredPlanet(filteredPlanet.filter((item) => item < value));
+      console.log('entrei menor');
+      setFilteredPlanet(filteredPlanet
+        .filter((item) => parseInt(item[feature], 10) < value));
       break;
     case IGUAL:
-      setFilteredPlanet(filteredPlanet.filter((item) => item === value));
+      setFilteredPlanet(filteredPlanet
+        .filter((item) => parseInt(item[feature], 10) === value));
       break;
     default:
-      return array;
+      break;
     }
   };
-
-  console.log(filteredPlanet);
 
   const contextObj = {
     planetData,
     filteredPlanet,
+    filters,
     isLoading,
     setFilteredPlanet,
+    setFilters,
     filterFeature,
   };
 

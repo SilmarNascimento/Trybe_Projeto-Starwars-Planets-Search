@@ -27,7 +27,6 @@ function Table() {
     }
   };
 
-  console.log(planetData, filteredPlanet);
   return (
     <div>
       { isLoading && <p>Carregando...</p> }
