@@ -11,6 +11,13 @@ function Form() {
     filterFeature,
   } = useContext(PlanetContext);
 
+  const features = [
+    'population',
+    'orbital_period',
+    'diameter',
+    'rotation_period',
+    'surface_water'];
+
   const [nameInput, setNameInput] = useState('');
   const [featureInput, setFeatureinput] = useState('population');
   const [operationInput, setOperationInput] = useState('maior que');
@@ -68,11 +75,21 @@ function Form() {
             onChange={ ({ target: { value } }) => setFeatureinput(value) }
             data-testid="column-filter"
           >
-            <option value="population">population</option>
-            <option value="orbital_period">orbital_period</option>
-            <option value="diameter">diameter</option>
-            <option value="rotation_period">rotation_period</option>
-            <option value="surface_water">surface_water</option>
+            {
+              features.map((feature) => {
+                if (!filters.find((filter) => filter.feature === feature)) {
+                  return (
+                    <option
+                      key={ feature }
+                      value={ feature }
+                    >
+                      { feature }
+                    </option>
+                  );
+                }
+                return undefined;
+              }).filter((option) => option !== undefined)
+            }
           </select>
           <label htmlFor="operationinput">Operador</label>
           <select
