@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react';
 export default function useFetch(url) {
   const [planetData, setPlanetData] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
+  const [filteredPlanet, setFilteredPlanet] = useState([]);
 
   const removeResidents = (array) => array.map((planet) => {
     delete planet.residents;
@@ -15,6 +16,7 @@ export default function useFetch(url) {
       const response = await fetch(url);
       const planetsInformation = await response.json();
       setPlanetData(removeResidents(planetsInformation.results));
+      setFilteredPlanet(removeResidents(planetsInformation.results));
     } catch (error) {
       console.log('erro');
     } finally {
@@ -28,6 +30,8 @@ export default function useFetch(url) {
 
   return {
     planetData,
+    filteredPlanet,
     isLoading,
+    setFilteredPlanet,
   };
 }

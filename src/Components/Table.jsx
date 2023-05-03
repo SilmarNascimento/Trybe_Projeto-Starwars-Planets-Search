@@ -2,7 +2,7 @@ import { useContext } from 'react';
 import PlanetContext from '../contexts/PlanetContext';
 
 function Table() {
-  const { planetData, isLoading } = useContext(PlanetContext);
+  const { planetData, filteredPlanet, isLoading } = useContext(PlanetContext);
   const features = Object.keys(planetData[0] ?? []);
 
   const renderTableheader = () => {
@@ -14,7 +14,7 @@ function Table() {
 
   const renderTableBody = () => {
     if (!isLoading) {
-      const planetDescription = planetData.map((planet, index) => (
+      const planetDescription = filteredPlanet.map((planet, index) => (
         <tr key={ index }>
           { features.map((feature, position) => (
             <th key={ `${planet}-${position}` }>
@@ -27,7 +27,7 @@ function Table() {
     }
   };
 
-  console.log(planetData, isLoading);
+  console.log(planetData, filteredPlanet);
   return (
     <div>
       { isLoading && <p>Carregando...</p> }
