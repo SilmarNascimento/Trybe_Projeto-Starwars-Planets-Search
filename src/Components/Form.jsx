@@ -19,6 +19,8 @@ function Form() {
     'surface_water',
   ];
   const maxLimitFilter = 5;
+  const posSortConst = 1;
+  const negSortConst = -1;
 
   const [nameInput, setNameInput] = useState('');
   const [featureInput, setFeatureInput] = useState('population');
@@ -69,10 +71,24 @@ function Form() {
     const sortedInformation = [...filteredPlanet];
     switch (sort) {
     case 'ASC':
-      setFilteredPlanet(sortedInformation.sort((pA, pB) => pA[column] - pB[column]));
+      setFilteredPlanet(sortedInformation.sort((pA, pB) => {
+        if (pA[column] === 'unknown') {
+          return posSortConst;
+        } if (pB[column] === 'unknown') {
+          return negSortConst;
+        }
+        return pA[column] - pB[column];
+      }));
       break;
     case 'DESC':
-      setFilteredPlanet(sortedInformation.sort((pA, pB) => pB[column] - pA[column]));
+      setFilteredPlanet(sortedInformation.sort((pA, pB) => {
+        if (pA[column] === 'unknown') {
+          return posSortConst;
+        } if (pB[column] === 'unknown') {
+          return negSortConst;
+        }
+        return pB[column] - pA[column];
+      }));
       break;
     default:
       break;
