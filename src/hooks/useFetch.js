@@ -11,17 +11,12 @@ export default function useFetch(url) {
   });
 
   const fetchInfo = async () => {
-    try {
-      setIsLoading(true);
-      const response = await fetch(url);
-      const planetsInformation = await response.json();
-      setPlanetData(removeResidents(planetsInformation.results));
-      setFilteredPlanet(removeResidents(planetsInformation.results));
-    } catch (error) {
-      console.log('erro');
-    } finally {
-      setIsLoading(false);
-    }
+    setIsLoading(true);
+    const response = await fetch(url);
+    const planetsInformation = await response.json();
+    setPlanetData(removeResidents(planetsInformation.results));
+    setFilteredPlanet(removeResidents(planetsInformation.results));
+    setIsLoading(false);
   };
 
   useEffect(() => {

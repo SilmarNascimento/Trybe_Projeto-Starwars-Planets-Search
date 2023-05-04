@@ -25,7 +25,6 @@ function Filter() {
       newPlanetData = [...filter];
     });
     setFilteredPlanet(newPlanetData);
-    console.log(newPlanetData);
   };
 
   const renderFilters = () => filters.map((filter) => {

@@ -1,4 +1,4 @@
-export default mockData = {
+const mockData = {
   "count": 60, 
   "next": "https://swapi.dev/api/planets/?page=2", 
   "previous": null, 
@@ -236,4 +236,6 @@ export default mockData = {
           "url": "https://swapi.dev/api/planets/10/"
       }
   ]
-}
+};
+
+export default mockData;

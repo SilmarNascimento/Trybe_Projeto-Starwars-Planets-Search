@@ -1,6 +1,5 @@
 import './App.css';
 import { useState } from 'react';
-import Header from './Components/Header';
 import Form from './Components/Form';
 import Table from './Components/Table';
 import PlanetContext from './contexts/PlanetContext';
@@ -25,7 +24,6 @@ function App() {
     case IGUAL:
       return array.filter((item) => parseInt(item[feature], 10) === value);
     default:
-      break;
     }
   };
 
@@ -41,7 +39,6 @@ function App() {
 
   return (
     <PlanetContext.Provider value={ contextObj }>
-      <Header />
       <div>
         <Form />
         <Filter />

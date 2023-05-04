@@ -39,7 +39,6 @@ function Form() {
     const avaliableFeatures = features
       .filter((feature) => !array
         .find((filter) => filter.feature === feature));
-    console.log(avaliableFeatures);
     setFeatureInput(avaliableFeatures[0]);
     setOperationInput('maior que');
     setValueFilter('0');
@@ -91,7 +90,6 @@ function Form() {
       }));
       break;
     default:
-      break;
     }
   };
 
