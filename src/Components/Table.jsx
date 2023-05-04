@@ -40,7 +40,6 @@ function Table() {
 
   return (
     <div>
-      { isLoading && <p>Carregando...</p> }
       <h1>Table</h1>
       <table>
         <thead>
