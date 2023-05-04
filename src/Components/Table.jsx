@@ -16,11 +16,22 @@ function Table() {
     if (!isLoading) {
       const planetDescription = filteredPlanet.map((planet, index) => (
         <tr key={ index }>
-          { features.map((feature, position) => (
-            <th key={ `${planet}-${position}` }>
-              { planet[feature] }
-            </th>
-          )) }
+          {
+            features.map((feature, position) => {
+              if (feature === 'name') {
+                return (
+                  <th key={ `${planet}-${position}` } data-testid="planet-name">
+                    { planet[feature] }
+                  </th>
+                );
+              }
+              return (
+                <th key={ `${planet}-${position}` }>
+                  { planet[feature] }
+                </th>
+              );
+            })
+          }
         </tr>
       ));
       return planetDescription;

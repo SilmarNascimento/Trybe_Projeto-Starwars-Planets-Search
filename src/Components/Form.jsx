@@ -24,6 +24,12 @@ function Form() {
   const [featureInput, setFeatureInput] = useState('population');
   const [operationInput, setOperationInput] = useState('maior que');
   const [valueFilter, setValueFilter] = useState('0');
+  const [sortInfo, setSortInfo] = useState({
+    order: {
+      column: 'population',
+      sort: 'ASC',
+    },
+  });
 
   const nameFilter = (array, value) => array.filter((item) => item.name.includes(value));
 
@@ -55,6 +61,22 @@ function Form() {
       setFilteredPlanet(filterFeature(filteredPlanet, feature, operation, value));
       refreshState(newFilterSet);
     });
+  };
+
+  const handleSort = (event) => {
+    event.preventDefault();
+    const { order: { column, sort } } = sortInfo;
+    const sortedInformation = [...filteredPlanet];
+    switch (sort) {
+    case 'ASC':
+      setFilteredPlanet(sortedInformation.sort((pA, pB) => pA[column] - pB[column]));
+      break;
+    case 'DESC':
+      setFilteredPlanet(sortedInformation.sort((pA, pB) => pB[column] - pA[column]));
+      break;
+    default:
+      break;
+    }
   };
 
   return (
@@ -126,6 +148,74 @@ function Form() {
             data-testid="button-filter"
           >
             Filtrar
+          </button>
+        </section>
+        <section>
+          <label htmlFor="sortInfo">Características</label>
+          <select
+            name="sortInfo"
+            id="sortInfo"
+            value={ sortInfo.order.column }
+            onChange={
+              ({ target: { value } }) => setSortInfo({
+                ...sortInfo,
+                order: {
+                  ...sortInfo.order,
+                  column: value,
+                },
+              })
+            }
+            data-testid="column-sort"
+          >
+            { features.map((feature) => (
+              <option
+                key={ feature }
+                value={ feature }
+              >
+                { feature }
+              </option>)) }
+          </select>
+          <input
+            type="radio"
+            name="sortOrder"
+            value="ASC"
+            checked={ sortInfo.order.sort === 'ASC' }
+            onChange={
+              ({ target: { value } }) => setSortInfo({
+                ...sortInfo,
+                order: {
+                  ...sortInfo.order,
+                  sort: value,
+                },
+              })
+            }
+            id="sortASC"
+            data-testid="column-sort-input-asc"
+          />
+          <label htmlFor="sortASC">ASC</label>
+          <input
+            type="radio"
+            name="sortOrder"
+            value="DESC"
+            checked={ sortInfo.order.sort === 'DESC' }
+            onChange={
+              ({ target: { value } }) => setSortInfo({
+                ...sortInfo,
+                order: {
+                  ...sortInfo.order,
+                  sort: value,
+                },
+              })
+            }
+            id="sortDESC"
+            data-testid="column-sort-input-desc"
+          />
+          <label htmlFor="sortDESC">DESC</label>
+          <button
+            onClick={ handleSort }
+            data-testid="column-sort-button"
+          >
+            Ordenar
           </button>
         </section>
       </fieldset>
